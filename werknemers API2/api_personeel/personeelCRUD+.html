@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="nl" xmlns:mso="urn:schemas-microsoft-com:office:office"
+    xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+
+<head>
+    <title> Personeel CRUD+</title>
+    <meta charset="utf-8" />
+    <style>
+        div,
+        footer,
+        form {
+            margin-top: 20px;
+        }
+
+        input,
+        select {
+            margin-top: 5px;
+            width: 40%;
+            padding: 2px;
+        }
+
+        body {
+            width: 80%;
+            max-width: 600px;
+            margin: auto;
+            margin-top: 50px;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding-right: 10px;
+        }
+
+        div {
+            width: 100%;
+        }
+
+        label {
+            width: 20%;
+            display: inline-block;
+        }
+
+        td:last-child {
+            color: red;
+            cursor: pointer;
+        }
+    </style>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <h1>Personeel CRUD &oplus;</h1>
+
+    <div id="appContent" style="visibility: hidden">
+        <div>
+            <label for="functie">functie:</label>
+            <select id="functie" onclick="laadFunctieWerknemers()"></select>
+        </div>
+        <br />
+        <table>
+            <tr>
+                <th>Werknemer</th>
+                <th>Telefoon</th>
+                <th>Email</th>
+                <th>Functie</th>
+            </tr>
+            <tbody id="tabelInhoud" />
+        </table>
+
+        <div>
+            <label for="naam">naam:</label><input type="text" id="naam" required /><br />
+            <label for="telefoon">telefoon:</label><input type="text" id="telefoon" /><br />
+            <label for="email">email:</label><input type="email" id="email" />
+            <button onclick="voegToe()" type="button">Toevoegen</button>
+        </div>
+    </div>
+
+    <div id="appLogin" style="visibility: visible">
+        <form action="javascript:void(0);">
+            <input type="email" placeholder="mail" id="mail" required>
+            <input type="password" placeholder="wachtwoord" id="wachtwoord" required>
+            <button type="submit" onclick="login()">Login</button>
+        </form>
+    </div>
+
+    <footer>&copy; 2021 AMJE</footer>
+</body>
+
+<script>
+    "use strict"
+    const apiBasis = "http://127.0.0.1:8000/api/"
+    const apiWerknemers = apiBasis + "werknemers"
+    const apiFuncties = apiBasis + "functies"
+    const apiLogin = apiBasis + "login"
+    let access_token = undefined
+
+    let functies = []
+    let werknemers = []
+
+    const laadFuncties = async () => {
+        const response = await axios.get(apiFuncties)
+        if (response.status != 200) {
+            alert(`Fout bij het lezen van de functies: ${response.status} (${response.statusText})`)
+            return
+        }
+        const json = await response.data
+
+        let selectInhoud = ''
+        json.data.map(el => {
+            functies[el.id] = el.naam
+            selectInhoud += `<option value="${el.id}">${el.naam}</option>`
+        })
+
+        document.querySelector("#functie").innerHTML = selectInhoud
+    }
+
+
+    const laadFunctieWerknemers = async () => {
+        // console.log('Begin laadfunctiewerknemers', access_token)
+        const functie = document.querySelector("#functie").value
+        const apiFunctiesWerknemers = `${apiFuncties}/${functie}/werknemers?sort=naam`
+
+        const response = await axios.get(apiFunctiesWerknemers, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + access_token
+            }
+        })
+
+        if (response.status != 200) {
+            alert(
+                `Fout bij het lezen van de werknemers: ${response.status} (${response.statusText})`
+            )
+            return
+        }
+
+        const json = await response.data
+        access_token = json.access_token
+        werknemers = json.data
+        // console.log('Eind laadfunctiewerknemers', access_token)
+        toon()
+    }
+
+    const toon = () => {
+        let tabelInhoud = ''
+        werknemers.map(el => tabelInhoud += `<tr><td>${el.naam}</td><td>${el.telefoon}</td><td>${el.email}</td>
+                        <td>${functies[el.functie_id]}</td><td onclick="verwijder(${el.id})"> x </td></tr>`)
+        document.querySelector("#tabelInhoud").innerHTML = tabelInhoud
+    }
+
+    const laad = async () => {
+        await laadFuncties()
+        await laadFunctieWerknemers()
+    }
+
+    const voegToe = async () => {
+        console.log('Begin voegToe', access_token)
+        var werknemer = {};
+
+        werknemer.naam = document.querySelector("#naam").value;
+        werknemer.telefoon = document.querySelector("#telefoon").value;
+        werknemer.email = document.querySelector("#email").value;
+        werknemer.functie_id = document.querySelector("#functie").value;
+
+        // Onderstaande is met een try-catch verwerkt. Axios genereert exceptions bij responsecodes
+        // buiten het 2xx bereik. Response code 400 krijg je uit de API (validatiefout)
+        let response = ''
+        try {
+            response = await axios.post(apiWerknemers, werknemer, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + access_token
+                }
+            })
+        } catch (error) {
+            // console.log(error.response)
+            if (error.response.status == 400) {
+                access_token = error.response.data.access_token
+                alert(`${error.response.data.foutmelding}`)
+                return
+            }
+            alert(
+                `Fout bij het toevoegen van de werknemer: 
+                ${error.response.status} (${error.response.statusText})
+                \nLog opnieuw aan om een token te verkrijgen`
+            )
+            return
+        }
+
+        if (response.status != 201) {
+            alert(
+                `Fout bij het toevoegen van de werknemer: ${response.status} (${response.statusText})`
+            )
+            return
+        }
+
+        const json = await response.data
+        access_token = json.access_token
+
+        document.querySelector("#naam").value = ''
+        document.querySelector("#telefoon").value = ''
+        document.querySelector("#email").value = ''
+
+        console.log('Einde voegToe', access_token)
+        await laadFunctieWerknemers()
+    }
+
+    const verwijder = async (id) => {
+        // console.log("Begin verwijder: ", id, access_token)
+        const apiDelete = `${apiWerknemers}/${id}`
+        const response = await axios.delete(apiDelete, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + access_token
+            }
+        })
+
+        if (response.status != 202) {
+            alert(
+                `Fout bij het verwijderen van werknemers: ${response.status} (${response.statusText})`
+            )
+        }
+        const json = await response.data
+        access_token = json.access_token
+
+        werknemers = await response.data
+        // console.log("Einde verwijder: ", id, access_token)
+        await laadFunctieWerknemers()
+    }
+
+    const login = async () => {
+        // console.log('Begin Login')
+        const gebruiker = {}
+        gebruiker.password = document.querySelector("#wachtwoord").value
+        gebruiker.email = document.querySelector("#mail").value
+
+        const respons = await axios.post(
+            apiLogin, gebruiker, { headers: { 'Content-Type': 'application/json' } })
+        // console.log('respons', respons)
+        access_token = await respons.data.access_token
+        // console.log('access_token: ', access_token)
+
+        document.querySelector("#appLogin").style.visibility = "hidden"
+        document.querySelector("#appContent").style.visibility = "visible"
+        // console.log('Einde login')
+        await laad()
+    }   
+</script>
+
+</html>

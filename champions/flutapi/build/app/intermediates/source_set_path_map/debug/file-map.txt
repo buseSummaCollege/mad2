@@ -1,0 +1,12 @@
+com.example.flutapi.app-debug-0 C:\Studiejaar 2022-2023\Mad1\flutapi\android\app\src\debug\res
+com.example.flutapi.app-main-1 C:\Studiejaar 2022-2023\Mad1\flutapi\android\app\src\main\res
+com.example.flutapi.app-pngs-2 C:\Studiejaar 2022-2023\Mad1\flutapi\build\app\generated\res\pngs\debug
+com.example.flutapi.app-resValues-3 C:\Studiejaar 2022-2023\Mad1\flutapi\build\app\generated\res\resValues\debug
+com.example.flutapi.app-rs-4 C:\Studiejaar 2022-2023\Mad1\flutapi\build\app\generated\res\rs\debug
+com.example.flutapi.app-mergeDebugResources-5 C:\Studiejaar 2022-2023\Mad1\flutapi\build\app\intermediates\incremental\debug\mergeDebugResources\merged.dir
+com.example.flutapi.app-mergeDebugResources-6 C:\Studiejaar 2022-2023\Mad1\flutapi\build\app\intermediates\incremental\debug\mergeDebugResources\stripped.dir
+com.example.flutapi.app-merged_res-7 C:\Studiejaar 2022-2023\Mad1\flutapi\build\app\intermediates\merged_res\debug
+com.example.flutapi.app-jetified-window-java-1.0.0-beta04-8 C:\Users\BUSE\.gradle\caches\transforms-3\006d93cd422dbc43e89591147c2de572\transformed\jetified-window-java-1.0.0-beta04\res
+com.example.flutapi.app-core-1.6.0-9 C:\Users\BUSE\.gradle\caches\transforms-3\4ca28c4a71705f8a687c69dda140a277\transformed\core-1.6.0\res
+com.example.flutapi.app-jetified-annotation-experimental-1.1.0-10 C:\Users\BUSE\.gradle\caches\transforms-3\8965c941cf4bee4d72541b965c7c9d39\transformed\jetified-annotation-experimental-1.1.0\res
+com.example.flutapi.app-jetified-window-1.0.0-beta04-11 C:\Users\BUSE\.gradle\caches\transforms-3\dee59bb480020f42d53c2ea15e4501f7\transformed\jetified-window-1.0.0-beta04\res

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "792678563618",
+    "firebase_url": "https://fir-workshop-project-3ba64-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "fir-workshop-project-3ba64",
+    "storage_bucket": "fir-workshop-project-3ba64.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:792678563618:android:28832904fa223f820b6f7b",
+        "android_client_info": {
+          "package_name": "com.example.opdracht22"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "792678563618-97r00v8cdo2qef75lncbldlboufehfhl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLkFmaTNTKyvpVscVeIUrTHjahehFcDBI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "792678563618-97r00v8cdo2qef75lncbldlboufehfhl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
