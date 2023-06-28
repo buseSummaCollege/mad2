@@ -19,11 +19,15 @@ class Hobby  {
   }
 
   @override
-  bool operator ==(Object o) {
-    if (o is Hobby) {
-      return o.id == this.id;
+  bool operator ==(Object other) {
+    if (other is Hobby) {
+      return other.id == id;
     } else {
       return false;
     }
   }
+
+  @override
+  // TODO: implement hashCode
+  int get hashCode => '$naam$id'.hashCode;
 }

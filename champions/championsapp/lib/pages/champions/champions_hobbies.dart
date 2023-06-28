@@ -5,7 +5,7 @@ import 'package:championsapp/services/hobby_service.dart';
 import 'package:flutter/material.dart';
 
 class ChampionsHobbiesPage extends StatefulWidget {
-  ChampionsHobbiesPage({Key? key, required this.champion}) : super(key: key);
+  const ChampionsHobbiesPage({Key? key, required this.champion}) : super(key: key);
 
   final Champion champion;
 
@@ -17,7 +17,7 @@ class _ChampionsHobbiesPageState extends State<ChampionsHobbiesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Champion Hobbies')),
+      appBar: AppBar(title: const Text('Champion Hobbies')),
       body: Column(
         children: [
           // Champion Data
@@ -32,12 +32,12 @@ class _ChampionsHobbiesPageState extends State<ChampionsHobbiesPage> {
                   return Text(snapshot.error.toString());
                 }
                 if (snapshot.hasData == false) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 }
                 return ListView.builder(
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
-                    print(widget.champion.hobbies!.contains(snapshot.data![index]));
+                    // print(widget.champion.hobbies!.contains(snapshot.data![index]));
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

@@ -106,7 +106,7 @@ class _ChampionsIndexState extends State<ChampionsIndex> {
     );
   }
 
-  _championHobbies(Champion champion, BuildContext context) {
+  Widget _championHobbies(Champion champion, BuildContext context) {
     return GestureDetector(
       onTap: () async {
         await Navigator.of(context).push(MaterialPageRoute(

@@ -1,5 +1,5 @@
 import 'package:championsapp/pages/champions/champions_index.dart';
-import 'package:championsapp/pages/hobbies/hobies_index.dart';
+import 'package:championsapp/pages/hobbies/hobbies_index.dart';
 import 'package:championsapp/pages/home_page.dart';
 import 'package:flutter/material.dart';
 

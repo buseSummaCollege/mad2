@@ -42,7 +42,8 @@ class AuthenticationController extends Controller
         $response = [
             // 'access_token' => $request->bearerToken(),
             'access_token' => auth()->user()->createToken('API Token')->plainTextToken,
-            'token_type' => 'Bearer'
+            'token_type' => 'Bearer',
+            'user' => auth()->user()
         ];
         return response()->json($response, 200);
     }

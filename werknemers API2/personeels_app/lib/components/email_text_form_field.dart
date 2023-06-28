@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 
 class EmailTextFormField extends StatelessWidget {
   final TextEditingController controller;
-
   const EmailTextFormField({
-    Key? key,
-    required this.controller,
+    Key? key, required this.controller,
+
   }) : super(key: key);
 
   @override

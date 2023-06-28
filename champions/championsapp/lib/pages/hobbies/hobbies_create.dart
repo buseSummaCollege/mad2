@@ -22,7 +22,7 @@ class _HobbiesCreateState extends State<HobbiesCreate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Hobbies - Create')),
+        appBar: AppBar(title: const Text('Hobbies - Create')),
         body: Form(
             key: _formKey,
             child: Column(
@@ -31,7 +31,7 @@ class _HobbiesCreateState extends State<HobbiesCreate> {
                 TextFormField(
                   controller: _naamController,
                   textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Naam',
                   ),
@@ -58,12 +58,12 @@ class _HobbiesCreateState extends State<HobbiesCreate> {
                         hobby = await HobbyService().post(hobby);
                         Navigator.pop(context);
                       },
-                      child: Text('Bewaren'),),
+                      child: const Text('Bewaren'),),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text('Annuleren'),),
+                      child: const Text('Annuleren'),),
                   ],
                 )
               ],

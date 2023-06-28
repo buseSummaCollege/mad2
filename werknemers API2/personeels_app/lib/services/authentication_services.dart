@@ -9,6 +9,7 @@ class AuthenticationServices {
       : 'http://127.0.0.1:8000/api';
 
   static String _bearerToken = '';
+  static int _userId = 0;
 
   static String getBearerToken() {
     return _bearerToken;
@@ -48,8 +49,11 @@ class AuthenticationServices {
     );
 
     if (response.statusCode == 200) {
+      print(response.body);
       final result = jsonDecode(response.body);
       _bearerToken = result['access_token'];
+      _userId = result['user']['id'];
+      print(_userId);
     }
 
     return response.statusCode == 200;

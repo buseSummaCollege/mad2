@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:personeels_app/services/authentication_services.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key, required this.setSignedIn}) : super(key: key);
+  final Function(bool signedIn) setSignedIn;
 
-  final void Function(bool signedIn) setSignedIn;
+  const LoginPage({Key? key, required this.setSignedIn}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();

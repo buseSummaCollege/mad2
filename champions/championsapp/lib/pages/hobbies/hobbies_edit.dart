@@ -29,7 +29,7 @@ class _HobbiesEditState extends State<HobbiesEdit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Champions - Edit')),
+        appBar: AppBar(title: const Text('Champions - Edit')),
         body: Form(
             key: _formKey,
             child: Column(
@@ -38,7 +38,7 @@ class _HobbiesEditState extends State<HobbiesEdit> {
                 TextFormField(
                   controller: _naamController,
                   textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Naam',
                   ),
@@ -66,15 +66,17 @@ class _HobbiesEditState extends State<HobbiesEdit> {
                             naam: _naamController.text);
                         hobby = await HobbyService()
                             .put(widget.hobby.id, hobby);
-                        Navigator.pop(context);
+                        if (context.mounted){
+                          Navigator.pop(context);
+                        }
                       },
-                      child: Text('Bewaren'),
+                      child: const Text('Bewaren'),
                     ),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text('Annuleren'),
+                      child: const Text('Annuleren'),
                     ),
                   ],
                 )

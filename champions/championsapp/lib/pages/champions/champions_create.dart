@@ -24,7 +24,7 @@ class _ChampionsCreateState extends State<ChampionsCreate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Champions - Create')),
+        appBar: AppBar(title: const Text('Champions - Create')),
         body: Form(
             key: _formKey,
             child: Column(
@@ -33,7 +33,7 @@ class _ChampionsCreateState extends State<ChampionsCreate> {
                 TextFormField(
                   controller: _naamController,
                   textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Naam',
                   ),
@@ -49,7 +49,7 @@ class _ChampionsCreateState extends State<ChampionsCreate> {
                 TextFormField(
                   controller: _klasController,
                   textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Klas',
                   ),
@@ -68,21 +68,25 @@ class _ChampionsCreateState extends State<ChampionsCreate> {
                       onPressed: () async {
                         if (_formKey.currentState!.validate() == false) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Verbeter de fouten')),
+
+                            const SnackBar(content: Text('Verbeter de fouten'),
+                            ),
                           );
-                        };
+                        }
                         var champion = Champion(id: 0,
                             naam: _naamController.text,
                             klas: _klasController.text);
                         champion = await ChampionService().post(champion);
-                        Navigator.pop(context);
+                        if (context.mounted){
+                          Navigator.pop(context);
+                        }
                       },
-                      child: Text('Bewaren'),),
+                      child: const Text('Bewaren'),),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text('Annuleren'),),
+                      child: const Text('Annuleren'),),
                   ],
                 )
               ],

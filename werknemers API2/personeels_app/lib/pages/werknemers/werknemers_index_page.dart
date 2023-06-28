@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:personeels_app/models/functie.dart';
 import 'package:personeels_app/models/werknemer.dart';
-import 'package:personeels_app/pages/werknemers_create_page.dart';
-import 'package:personeels_app/pages/werknemers_update_page.dart';
+import 'package:personeels_app/pages/werknemers/werknemers_create_page.dart';
+import 'package:personeels_app/pages/werknemers/werknemers_update_page.dart';
 import 'package:personeels_app/services/functies_services.dart';
 import 'package:personeels_app/services/werknemers_services.dart';
 
@@ -33,6 +33,33 @@ class _WerknemersIndexPageState extends State<WerknemersIndexPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+          child: ListView(children: [
+        DrawerHeader(
+          child: Column(
+            children: const [
+              Icon(
+                Icons.person,
+                size: 40,
+              ),
+              Text('Werknemers App'),
+            ],
+          ),
+        ),
+        GestureDetector(
+          child: Text('Over...'),
+          onTap: () {
+            showAboutDialog(
+                context: context,
+                applicationName: 'PersoneelsApp',
+                applicationIcon: FlutterLogo(),
+                applicationVersion: '1.0.0',
+                children: [
+                  Text('Over de PersoneelsApp'),
+                ]);
+          },
+        )
+      ])),
       appBar: AppBar(
         title: const Text('Werknemers Index'),
         actions: [_logout()],
@@ -65,8 +92,7 @@ class _WerknemersIndexPageState extends State<WerknemersIndexPage> {
         Functie selectedFunctie = _selectedFunctie!;
 
         await Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) =>
-              WerknemersCreatePage(functie: selectedFunctie),
+          builder: (context) => WerknemersCreatePage(functie: selectedFunctie),
         ));
         _refreshIndex(selectedFunctie);
       },
@@ -95,8 +121,8 @@ class _WerknemersIndexPageState extends State<WerknemersIndexPage> {
 
   _btnDeleteWerknemer({required Werknemer werknemer}) {
     return IconButton(
-      onPressed: () async {
-        await WerknemersServices.delete(werknemerId: werknemer.id);
+      onPressed: ()  async {
+         await WerknemersServices.delete(werknemerId: werknemer.id);
         _refreshIndex(_selectedFunctie!);
       },
       icon: const Icon(
@@ -143,28 +169,28 @@ class _WerknemersIndexPageState extends State<WerknemersIndexPage> {
     return _werknemers == null
         ? const Center(child: CircularProgressIndicator())
         : FutureBuilder(
-            future: _werknemers,
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Center(child: Text(snapshot.error.toString()));
-              }
-              if (snapshot.hasData == false) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              return ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(snapshot.data![index].naam),
-                    subtitle: Text(snapshot.data![index].email),
-                    leading:
-                        _btnUpdateWerknemer(werknemer: snapshot.data![index]),
-                    trailing:
-                        _btnDeleteWerknemer(werknemer: snapshot.data![index]),
-                  );
-                },
-              );
-            },
+      future: _werknemers,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Center(child: Text(snapshot.error.toString()));
+        }
+        if (snapshot.hasData == false) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        return ListView.builder(
+          itemCount: snapshot.data!.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(snapshot.data![index].naam),
+              subtitle: Text(snapshot.data![index].email),
+              leading:
+              _btnUpdateWerknemer(werknemer: snapshot.data![index]),
+              trailing:
+              _btnDeleteWerknemer(werknemer: snapshot.data![index]),
+            );
+          },
+        );
+      },
           );
   }
 }

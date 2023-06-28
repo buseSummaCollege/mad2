@@ -71,6 +71,22 @@ class _WerknemersCreatePageState extends State<WerknemersCreatePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
+                      child : const  Text('Toevoegen'),
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          await WerknemersServices.create(
+                              naam: _naamController.text,
+                              functieId: widget.functie.id,
+                              telefoon: _telefoonController.text,
+                              email: _emailController.text,
+                              sinds: _sindsController.text);
+                          if (context.mounted){
+                            Navigator.of(context).pop();
+                          }
+                        }
+                      },
+                    ),
+                    ElevatedButton(
                       child: const Text('Toevoegen'),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
@@ -80,7 +96,9 @@ class _WerknemersCreatePageState extends State<WerknemersCreatePage> {
                               telefoon: _telefoonController.text,
                               email: _emailController.text,
                               sinds: _sindsController.text);
-                          Navigator.of(context).pop();
+                          if (context.mounted){
+                            Navigator.of(context).pop();
+                          }
                         }
                       },
                     ),

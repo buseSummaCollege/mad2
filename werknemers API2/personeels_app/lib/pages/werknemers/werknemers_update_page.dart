@@ -67,8 +67,7 @@ class _WerknemersUpdatePageState extends State<WerknemersUpdatePage> {
             key: _formKey,
             child: Column(
               children: [
-                // Functie
-                // Combobox met functies
+                // Functie;  Combobox met functies
                 Row(children: [_cmbFuncties()]),
 
                 //naam

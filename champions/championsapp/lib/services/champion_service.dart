@@ -4,16 +4,19 @@ import 'package:championsapp/models/hobby.dart';
 import 'package:http/http.dart' as http;
 
 class ChampionService {
+
   Future<List<Champion>> getAll() async {
     List<Champion> champions = [];
+
     final response =
-    await http.get(Uri.parse('https://flutapi.summaict.nl/api/champions'));
+      await http.get(Uri.parse('https://flutapi.summaict.nl/api/champions'));
     if (response.statusCode != 200) {
       throw Exception(
           'Fout bij het ophalen van alle champions (${response.statusCode}).');
     }
 
     final List<dynamic> data = jsonDecode(response.body);
+
     for (int i = 0; i < data.length; i++) {
       final champion = Champion(
           id: data[i]['id'],

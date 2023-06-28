@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:personeels_app/pages/werknemers_home_page.dart';
-import 'package:personeels_app/pages/werknemers_index_page.dart';
+import 'package:personeels_app/pages/home_page.dart';
+import 'package:personeels_app/pages/werknemers/werknemers_index_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key, required this.setSignedIn}) : super(key: key);
@@ -28,7 +28,7 @@ class _MainPageState extends State<MainPage> {
         ),
         body: TabBarView(
           children: [
-            const WerknemersHomePage(),
+            const HomePage(),
             WerknemersIndexPage(setSignedIn: widget.setSignedIn),
           ],
         ),

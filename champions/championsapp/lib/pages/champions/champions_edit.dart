@@ -32,7 +32,7 @@ class _ChampionsEditState extends State<ChampionsEdit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Champions - Edit')),
+        appBar: AppBar(title: const Text('Champions - Edit')),
         body: Form(
             key: _formKey,
             child: Column(
@@ -41,7 +41,7 @@ class _ChampionsEditState extends State<ChampionsEdit> {
                 TextFormField(
                   controller: _naamController,
                   textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Naam',
                   ),
@@ -57,7 +57,7 @@ class _ChampionsEditState extends State<ChampionsEdit> {
                 TextFormField(
                   controller: _klasController,
                   textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Klas',
                   ),
@@ -79,22 +79,23 @@ class _ChampionsEditState extends State<ChampionsEdit> {
                             const SnackBar(content: Text('Verbeter de fouten')),
                           );
                         }
-                        ;
                         var champion = Champion(
                             id: widget.champion.id,
                             naam: _naamController.text,
                             klas: _klasController.text);
                         champion = await ChampionService()
                             .put(widget.champion.id, champion);
-                        Navigator.pop(context);
+                        if (context.mounted){
+                          Navigator.pop(context);
+                        }
                       },
-                      child: Text('Bewaren'),
+                      child: const Text('Bewaren'),
                     ),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text('Annuleren'),
+                      child: const Text('Annuleren'),
                     ),
                   ],
                 )
